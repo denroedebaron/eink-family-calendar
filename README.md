@@ -1,8 +1,12 @@
 # ESP32 E-Ink Calendar Display
 
-A battery-powered e-ink display that shows an illustrated daily calendar with events from Google Calendar. The display updates automatically and uses deep sleep for maximum battery life.
+Tired of boring calendars? Meet the enchanted e-ink display! It's a battery-powered ESP32 wizard that conjures up your next four days of family adventures.
 
-![Project Image](docs/project-image.jpg)
+But here's where the real fun begins: Every morning, it transforms today's schedule into a tale, complete with a delightful fun fact and a charming Winnie-the-Pooh-style illustration of your daily escapades. Imagine: "Today we're off to the zoo!" accompanied by Pooh Bear playfully feeding a giraffe.
+
+Designed to sprinkle a little extra joy into your kids' routines, it updates automatically and sips battery power like Pooh sips honey – lasting ages with deep sleep magic!
+
+![Project Image](output/illustrated_calendar.bmp)
 
 ## Features
 
@@ -116,7 +120,7 @@ DIN/MOSI ├──────────────────────�
 
 | Display Pin | Function | ESP32-S3 GPIO | Notes |
 |-------------|----------|---------------|-------|
-| BUSY | Busy status | GPIO 4 | Not used in this version (-1 in code) |
+| BUSY | Busy status | GPIO 4 | |
 | RST | Reset | GPIO 16 | Active low |
 | DC | Data/Command | GPIO 17 | High=data, Low=command |
 | CS | Chip Select | GPIO 10 | Active low |
@@ -251,7 +255,7 @@ The server will run on `http://0.0.0.0:8000`
 
 ### Software Requirements
 
-- **Arduino IDE** 2.0+ or **PlatformIO**
+- **Arduino IDE** 2.0+
 - ESP32 board support
 - Required libraries
 
