@@ -3,6 +3,7 @@ AI image generation using ImageRouter.io
 """
 import os
 import requests
+import random
 import datetime
 from calendar_api import fetch_calendar_events
 from llm_handler import llm
@@ -16,10 +17,22 @@ def draw_calendar_animal_imagerouter():
         
         # Get events for today
         todays_events = calendar_events.get(today, [])
-        
         if not todays_events:
-            # No events - create a relaxed animal
-            prompt = "Create a pencil drawn cute and relaxed cat in Winnie the Pooh style with only the colors red, black and white. The cat should look peaceful and happy with no obligations."
+                
+            animal = random.choice(["cat", "dog", "rabbit", "penguin", "owl", "fox"])
+            activity = random.choice([
+                "sleeping sweetly on a red sofa",
+                "reading a book with red glasses on",
+                "lying in a hammock",
+                "enjoying a cup of tea",
+                "looking at the clouds",
+                "drinking water from a red cup"
+            ])
+            
+            prompt = (
+                    f"Create a pencil drawn cute and relaxed {animal} in Winnie the Pooh style with only the colors red, black and white. "
+                    f"The {animal} is {activity}. The mood should be peaceful and happy with no obligations."
+                )        
         else:
             # Has events - create an animal that reflects the day's activity
             event_count = len(todays_events)

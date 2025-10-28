@@ -26,15 +26,26 @@ def llm() -> str:
         
         # Get events for today
         todays_events = calendar_events.get(today, [])
-        
         if not todays_events:
-            # No events - create a general fun fact
-            prompt = "Fortæl kun et kort fun fact for børn på maksimalt 1-2 linjer. Start direkte med fakta, ikke med 'Her er et fun fact'. Brug ikke markdown formatting."
+            general_topics = ["et mærkeligt dyr", "en sjov ting fra rummet", "en hemmelighed om vand", "en rekord om legetøj"]
+            random_topic = random.choice(general_topics)
+
+            prompt = (
+                f"Du er en fantasifuld historiefortæller for børn. Fortæl kun et meget kort, muntert og fantasifuldt fun fact for børn på maksimalt 1-2 linjer om **{random_topic}**. "
+                "Fakta skal sætte gang i tanker og leg. Start direkte med fakta, ikke med 'Her er et fun fact'. "
+                "Brug ikke markdown formatting."
+            )        
+ 
         else:
             # Has events - pick just one event for a focused fact
             first_event = todays_events[0]['summary']
-            prompt = f"Fortæl kun et kort fun fact relateret til '{first_event}' på maksimalt 1-2 linjer. Start direkte med fakta, ikke med 'Her er et fun fact om'. Brug ikke markdown formatting."
-        
+            prompt = (
+            f"Du er en fantasifuld historiefortæller for børn. Opgaven er: '{first_event}'. "
+            "Skriv kun et meget kort, muntert og fantasifuldt fun fact for børn på maksimalt 1-2 linjer. "
+            "Fakta skal sætte gang i tanker og leg, og bør relateres til det sjove eller mærkelige ved emnet. "
+            "Start direkte med fakta uden indledning som 'Vidste du' eller 'Her er et fun fact'. "
+            "Brug ikke markdown formatting."
+        )
         # Check if API key exists
         api_key = os.getenv('OPENROUTER_API_KEY')
         if not api_key:
