@@ -8,6 +8,5 @@ wheels/
 .env
 credentials/
 .DS_Store
-output/
 uv.lock
 

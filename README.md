@@ -6,7 +6,7 @@ But here's where the real fun begins: Every morning, it transforms today's sched
 
 Designed to sprinkle a little extra joy into your kids' routines, it updates automatically and sips battery power like Pooh sips honey – lasting ages with deep sleep magic!
 
-![Project Image](output/illustrated_calendar.bmp)
+![Project Image](server/output/illustrated_calendar.bmp)
 
 ## Features
 
