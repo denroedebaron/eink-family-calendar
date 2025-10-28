@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  calendar-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: calendar-server
+    ports:
+      - "8000:8000"
+    environment:
+      # Calendar configurations - replace with your actual values
+      - CALENDAR_1_ID=${CALENDAR_1_ID}
+      - CALENDAR_1_SYMBOL=${CALENDAR_1_SYMBOL:-P}
+      - CALENDAR_1_NAME=${CALENDAR_1_NAME:-Personal}
+      
+      - CALENDAR_2_ID=${CALENDAR_2_ID}
+      - CALENDAR_2_SYMBOL=${CALENDAR_2_SYMBOL:-■}
+      - CALENDAR_2_NAME=${CALENDAR_2_NAME:-Family}
+      
+      # API Keys
+      - IMAGEROUTER_API_KEY=${IMAGEROUTER_API_KEY}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      
+      # Google Calendar
+      - GOOGLE_CREDENTIALS_PATH=/app/credentials/kalender.json
+      
+      # Optional settings
+      - SECONDARY_ILLUSTRATION=${SECONDARY_ILLUSTRATION:-True}
+      
+    volumes:
+      # Mount credentials (read-only)
+      - ./credentials:/app/credentials:ro
+      
+      # Mount output directory for persistence
+      - calendar_output:/app/output
+      
+      # Optional: Mount .env file
+      - ./.env:/app/.env:ro
+      
+    restart: unless-stopped
+    
+    # Resource limits for Proxmox
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    
+    # Network configuration
+    networks:
+      - calendar-network
+
+# Named volume for persistent storage
+volumes:
+  calendar_output:
+    driver: local
+
+# Custom network
+networks:
+  calendar-network:
+    driver: bridge
